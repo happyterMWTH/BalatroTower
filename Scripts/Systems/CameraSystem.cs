@@ -27,9 +27,11 @@ public class CameraSystem : MonoBehaviour
     private float _targetZoom;
     private float _currentZoom;
     private float _offsetZoom;
+    private bool _resetting;
 
     void Awake()
     {
+        _resetting = false;
         _offsetPosition = Vector3.zero;
         _offsetZoom = 0f;
 
@@ -63,21 +65,26 @@ public class CameraSystem : MonoBehaviour
             transform.rotation = smoothRotation;
         }
 
-        _currentPosition = _camera.transform.localPosition;
-        _targetPosition = _currentPosition + _offsetPosition;
+        _currentPosition = transform.position;
+        _targetPosition = (!_resetting) ? _currentPosition + _offsetPosition : _targetPosition;
         if (_currentPosition != _targetPosition)
         {
             Vector3 smoothPosition = Vector3.Lerp(
                 _currentPosition,
                 _targetPosition,
                 movementPerSecond * Time.deltaTime);
-            _camera.transform.localPosition = smoothPosition;
+            transform.position = smoothPosition;
+        }
+
+        if (_resetting)
+        {
+            _resetting = (!((_currentPosition - _targetPosition).magnitude < 0.1f));
         }
 
         _currentZoom = _camera.orthographicSize;
         _targetZoom = _currentZoom + _offsetZoom * zoomPerSecond;
-        if(_targetZoom < minimumZoom){ _targetZoom = minimumZoom + 0.1f; }
-        if(_targetZoom > maximumZoom){ _targetZoom = maximumZoom - 0.1f; }
+        if(_targetZoom < minimumZoom){ _targetZoom = minimumZoom + 0.2f; }
+        if(_targetZoom > maximumZoom){ _targetZoom = maximumZoom - 0.2f; }
         if (_currentZoom != _targetZoom)
         {
             float smoothZoom = Mathf.Lerp(
@@ -87,6 +94,7 @@ public class CameraSystem : MonoBehaviour
             Debug.Log(smoothZoom);
             _camera.orthographicSize = smoothZoom;
         }
+        
 
     }
 
@@ -104,14 +112,21 @@ public class CameraSystem : MonoBehaviour
 
     public void MoveX(InputAction.CallbackContext context)
     {
-        float input = context.ReadValue<float>();
-        _offsetPosition.x = input * movementPerSecond * _currentZoom / maximumZoom;
+        if (!_resetting)
+        {
+            float input = context.ReadValue<float>();
+            _offsetPosition.x = input * movementPerSecond * _currentZoom / maximumZoom * transform.right.x;
+            _offsetPosition.z  = input * movementPerSecond * _currentZoom / maximumZoom * transform.right.z;
+        }
     }
 
     public void MoveY(InputAction.CallbackContext context)
     {
-        float input = context.ReadValue<float>();
-        _offsetPosition.y = input * movementPerSecond * _currentZoom / maximumZoom;
+        if (!_resetting)
+        {
+            float input = context.ReadValue<float>();
+            _offsetPosition.y = input * movementPerSecond * _currentZoom / maximumZoom;
+        }
     }
 
     public void Zoom(InputAction.CallbackContext context)
@@ -123,6 +138,16 @@ public class CameraSystem : MonoBehaviour
         else if (context.canceled)
         {
             _offsetZoom = 0;
+        }
+    }
+
+    public void ResetCamera(InputAction.CallbackContext context)
+    {
+        if (context.canceled)
+        {
+            Debug.Log("Reset Camera");
+            _resetting = true;
+            _targetPosition = player.transform.position;
         }
     }
     
