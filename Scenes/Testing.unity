@@ -215,7 +215,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 30
-  orthographic: 0
+  orthographic: 1
   orthographic size: 24.81
   m_Depth: -1
   m_CullingMask:
@@ -468,6 +468,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PuntoReferencia
       objectReference: {fileID: 0}
+    - target: {fileID: 5495682216035039481, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
+      propertyPath: pivote
+      value: 
+      objectReference: {fileID: 1921021502}
+    - target: {fileID: 5495682216035039481, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
+      propertyPath: patas.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5495682216035039481, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
+      propertyPath: 'patas.Array.data[9]'
+      value: 
+      objectReference: {fileID: 893182913}
     - target: {fileID: 7609355701238507171, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.2097607
@@ -539,7 +551,7 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 666597748}
   m_Enabled: 1
-  serializedVersion: 13
+  serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
@@ -591,7 +603,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ForceVisible: 0
-  m_ShapeRadius: 0.025
+  m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_LightUnit: 1
   m_LuxAtDistance: 1
@@ -650,6 +662,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4353004706194574617, guid: d62b4bd38ac219d4782acdd793f7cfc3, type: 3}
   m_PrefabInstance: {fileID: 1497254020}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &893182913 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1539682117293208593, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
+  m_PrefabInstance: {fileID: 528525014}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2137362d261c8494d8607fd881e15a55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &1186386403
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,14 +989,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1921021502}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.17871642, z: -0, w: -0.9839007}
+  m_LocalRotation: {x: 0, y: -0.17364825, z: 0, w: 0.9848078}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 156350628}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 339.41, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -20, z: 0}
 --- !u!1 &2114723307
 GameObject:
   m_ObjectHideFlags: 0
