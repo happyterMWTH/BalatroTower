@@ -70,7 +70,7 @@ public class CameraSystem : MonoBehaviour
             Mathf.Abs(y_angle - 160) < 0.5f || Mathf.Abs(y_angle - 70) < 0.5f)
         {
             Debug.Log("?");
-            transform.eulerAngles = new Vector3(0, Mathf.Round(y_angle), 0f);
+            transform.eulerAngles = new Vector3(0, Mathf.Round(y_angle), 0f);;
         }
         
         else if((Mathf.Abs(y_angle - 340) > 0.5f && Mathf.Abs(y_angle - 340) < 1f ) || 
