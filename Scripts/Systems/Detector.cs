@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Detector : MonoBehaviour
 {
+    [SerializeField] Color color = Color.green;
     RaycastHit contacto_suelo;
 
 
@@ -14,7 +15,7 @@ public class Detector : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.DrawRay(transform.position,-transform.up*1000, Color.green);
+        Debug.DrawRay(transform.position,-transform.up*1000, color);
         
     }
 }

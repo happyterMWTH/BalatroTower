@@ -64,6 +64,23 @@ public class CameraSystem : MonoBehaviour
                 rotationPerSecond * Time.deltaTime);
             transform.rotation = smoothRotation;
         }
+        var y_angle = transform.eulerAngles.y; 
+        Debug.Log(y_angle);
+        if(Mathf.Abs(y_angle - 340) < 0.5f || Mathf.Abs(y_angle - 250) < 0.5f ||
+            Mathf.Abs(y_angle - 160) < 0.5f || Mathf.Abs(y_angle - 70) < 0.5f)
+        {
+            Debug.Log("?");
+            transform.eulerAngles = new Vector3(0, Mathf.Round(y_angle), 0f);
+        }
+        
+        else if((Mathf.Abs(y_angle - 340) > 0.5f && Mathf.Abs(y_angle - 340) < 1f ) || 
+            (Mathf.Abs(y_angle - 250) > 0.5f && Mathf.Abs(y_angle - 250) < 1f ) ||
+            (Mathf.Abs(y_angle - 70) > 0.5f && Mathf.Abs(y_angle - 70) < 1f ) ||
+            (Mathf.Abs(y_angle - 160) > 0.5f && Mathf.Abs(y_angle - 160) < 1f )
+            )
+        {
+            transform.eulerAngles = new Vector3(0, Mathf.Round(y_angle), 0f);
+        }
 
         _currentPosition = transform.position;
         _targetPosition = (!_resetting) ? _currentPosition + _offsetPosition : _targetPosition;
@@ -78,7 +95,7 @@ public class CameraSystem : MonoBehaviour
 
         if (_resetting)
         {
-            _resetting = (!((_currentPosition - _targetPosition).magnitude < 0.1f));
+            _resetting = !((_currentPosition - _targetPosition).magnitude < 0.1f);
         }
 
         _currentZoom = _camera.orthographicSize;
@@ -91,10 +108,9 @@ public class CameraSystem : MonoBehaviour
                 _currentZoom, 
                 _targetZoom,    
                 zoomPerSecond * Time.deltaTime);
-            Debug.Log(smoothZoom);
+            //Debug.Log(smoothZoom);
             _camera.orthographicSize = smoothZoom;
-        }
-        
+        };
 
     }
 
@@ -102,7 +118,7 @@ public class CameraSystem : MonoBehaviour
     {
         if (context.performed)
         {
-            Debug.Log(context.ReadValue<float>());
+            //Debug.Log(context.ReadValue<float>());
             _targetRotation *= Quaternion.Euler(
                 0,
                 90 * -context.ReadValue<float>(),
