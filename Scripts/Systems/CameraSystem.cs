@@ -65,12 +65,10 @@ public class CameraSystem : MonoBehaviour
             transform.rotation = smoothRotation;
         }
         var y_angle = transform.eulerAngles.y; 
-        Debug.Log(y_angle);
         if(Mathf.Abs(y_angle - 340) < 0.5f || Mathf.Abs(y_angle - 250) < 0.5f ||
             Mathf.Abs(y_angle - 160) < 0.5f || Mathf.Abs(y_angle - 70) < 0.5f)
         {
-            Debug.Log("?");
-            transform.eulerAngles = new Vector3(0, Mathf.Round(y_angle), 0f);;
+            transform.eulerAngles = new Vector3(0, Mathf.Round(y_angle), 0f);
         }
         
         else if((Mathf.Abs(y_angle - 340) > 0.5f && Mathf.Abs(y_angle - 340) < 1f ) || 
@@ -163,8 +161,15 @@ public class CameraSystem : MonoBehaviour
         {
             Debug.Log("Reset Camera");
             _resetting = true;
-            _targetPosition = player.transform.position;
+            _targetPosition = _originalPosition;
         }
     }
     
+    public void ResetExterno(Vector3 nuevo_centro)
+    {
+        Debug.Log("?");
+        _originalPosition = nuevo_centro;
+        _targetPosition = _originalPosition;
+        _resetting = true;
+    }
 }
