@@ -466,23 +466,39 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 275005205272553686, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2
+      value: 2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381550768134588106, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 3381550768134588106, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2
+      value: -2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3488041600044538512, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4370567548987288902, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 4370567548987288902, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2
+      value: 2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435340032587748206, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.1
       objectReference: {fileID: 0}
     - target: {fileID: 4435340032587748206, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2
+      value: -2.1
       objectReference: {fileID: 0}
     - target: {fileID: 4869369756750287447, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2
+      value: -2.1
       objectReference: {fileID: 0}
     - target: {fileID: 5318436735448119794, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
       propertyPath: m_Name
@@ -501,8 +517,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 893182913}
     - target: {fileID: 6647574965292284140, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647574965292284140, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2
+      value: 2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205044930284556521, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.1
       objectReference: {fileID: 0}
     - target: {fileID: 7609355701238507171, guid: 8b3828909391ea34c85dbb446c90f1a5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -893,7 +917,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1921021503}
         m_TargetAssemblyTypeName: CameraSystem, Assembly-CSharp
-        m_MethodName: MoveX
+        m_MethodName: Mover_X_Input
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -909,7 +933,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1921021503}
         m_TargetAssemblyTypeName: CameraSystem, Assembly-CSharp
-        m_MethodName: Rotate
+        m_MethodName: Rotate_Input
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -925,7 +949,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1921021503}
         m_TargetAssemblyTypeName: CameraSystem, Assembly-CSharp
-        m_MethodName: MoveY
+        m_MethodName: Mover_Y_Input
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -941,7 +965,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1921021503}
         m_TargetAssemblyTypeName: CameraSystem, Assembly-CSharp
-        m_MethodName: Zoom
+        m_MethodName: Zoom_Input
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -957,7 +981,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1921021503}
         m_TargetAssemblyTypeName: CameraSystem, Assembly-CSharp
-        m_MethodName: ResetCamera
+        m_MethodName: Reset_Camara
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1178,7 +1202,7 @@ Transform:
   m_GameObject: {fileID: 2114723307}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.13, y: 0, z: 8}
+  m_LocalPosition: {x: 0, y: 1, z: 8}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []

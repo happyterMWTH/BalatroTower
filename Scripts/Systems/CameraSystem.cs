@@ -23,6 +23,7 @@ public class CameraSystem : MonoBehaviour
     private Vector3 _currentPosition;
     private Vector3 _originalPosition;
     private Vector3 _offsetPosition;
+    private bool _rotando = false;
 
     private float _targetZoom;
     private float _currentZoom;
@@ -55,31 +56,35 @@ public class CameraSystem : MonoBehaviour
 
     void Update()
     {
+        
+
+        Rotar();
+        Mover();
+        Zoom();
+       
+
+    }
+
+    private void Rotar()
+    {
         _currentRotation = transform.rotation;
         if (_currentRotation != _targetRotation)
         {
+            _rotando = true;
             Quaternion smoothRotation = Quaternion.Slerp(
                 _currentRotation,
                 _targetRotation,
                 rotationPerSecond * Time.deltaTime);
             transform.rotation = smoothRotation;
         }
-        var y_angle = transform.eulerAngles.y; 
-        if(Mathf.Abs(y_angle - 340) < 0.5f || Mathf.Abs(y_angle - 250) < 0.5f ||
-            Mathf.Abs(y_angle - 160) < 0.5f || Mathf.Abs(y_angle - 70) < 0.5f)
+        else
         {
-            transform.eulerAngles = new Vector3(0, Mathf.Round(y_angle), 0f);
-        }
-        
-        else if((Mathf.Abs(y_angle - 340) > 0.5f && Mathf.Abs(y_angle - 340) < 1f ) || 
-            (Mathf.Abs(y_angle - 250) > 0.5f && Mathf.Abs(y_angle - 250) < 1f ) ||
-            (Mathf.Abs(y_angle - 70) > 0.5f && Mathf.Abs(y_angle - 70) < 1f ) ||
-            (Mathf.Abs(y_angle - 160) > 0.5f && Mathf.Abs(y_angle - 160) < 1f )
-            )
-        {
-            transform.eulerAngles = new Vector3(0, Mathf.Round(y_angle), 0f);
-        }
+            _rotando = false;
+        }   
+    }
 
+    private void Mover()
+    {
         _currentPosition = transform.position;
         _targetPosition = (!_resetting) ? _currentPosition + _offsetPosition : _targetPosition;
         if (_currentPosition != _targetPosition)
@@ -95,24 +100,22 @@ public class CameraSystem : MonoBehaviour
         {
             _resetting = !((_currentPosition - _targetPosition).magnitude < 0.1f);
         }
+    }
 
+    private void Zoom()
+    {
         _currentZoom = _camera.orthographicSize;
-        _targetZoom = _currentZoom + _offsetZoom * zoomPerSecond;
-        if(_targetZoom < minimumZoom){ _targetZoom = minimumZoom + 0.2f; }
-        if(_targetZoom > maximumZoom){ _targetZoom = maximumZoom - 0.2f; }
         if (_currentZoom != _targetZoom)
         {
             float smoothZoom = Mathf.Lerp(
-                _currentZoom, 
-                _targetZoom,    
+                _currentZoom,
+                _targetZoom,
                 zoomPerSecond * Time.deltaTime);
-            //Debug.Log(smoothZoom);
             _camera.orthographicSize = smoothZoom;
-        };
-
+        }
     }
 
-    public void Rotate(InputAction.CallbackContext context)
+    public void Rotate_Input(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
@@ -124,7 +127,7 @@ public class CameraSystem : MonoBehaviour
         }
     }
 
-    public void MoveX(InputAction.CallbackContext context)
+    public void Mover_X_Input(InputAction.CallbackContext context)
     {
         if (!_resetting)
         {
@@ -134,7 +137,7 @@ public class CameraSystem : MonoBehaviour
         }
     }
 
-    public void MoveY(InputAction.CallbackContext context)
+    public void Mover_Y_Input(InputAction.CallbackContext context)
     {
         if (!_resetting)
         {
@@ -143,7 +146,7 @@ public class CameraSystem : MonoBehaviour
         }
     }
 
-    public void Zoom(InputAction.CallbackContext context)
+    public void Zoom_Input(InputAction.CallbackContext context)
     {
         if (context.started)
         {
@@ -155,7 +158,7 @@ public class CameraSystem : MonoBehaviour
         }
     }
 
-    public void ResetCamera(InputAction.CallbackContext context)
+    public void Reset_Camara(InputAction.CallbackContext context)
     {
         if (context.canceled)
         {
@@ -165,11 +168,14 @@ public class CameraSystem : MonoBehaviour
         }
     }
     
-    public void ResetExterno(Vector3 nuevo_centro)
+    public void Reset_Externo(Vector3 nuevo_centro)
     {
-        Debug.Log("?");
         _originalPosition = nuevo_centro;
         _targetPosition = _originalPosition;
         _resetting = true;
+    }
+    public bool Get_Rotando()
+    {
+        return _rotando;
     }
 }

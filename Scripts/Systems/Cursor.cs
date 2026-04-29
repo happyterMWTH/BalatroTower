@@ -1,5 +1,3 @@
-using System.Drawing;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,14 +28,14 @@ public class Cursor : MonoBehaviour
     {
         float valor_x = context.ReadValue<float>();
         posible_movimiento.x = valor_x;
-        Mover();
+        if(context.started && !pivote.GetComponent<CameraSystem>().Get_Rotando()) Mover();
     }
 
     public void SeleccionY(InputAction.CallbackContext context)
     {
         float valor_y = context.ReadValue<float>();
         posible_movimiento.y = valor_y;
-        Mover();
+        if(context.started && !pivote.GetComponent<CameraSystem>().Get_Rotando()) Mover();
     }
     private void Mover()
     {
@@ -45,65 +43,76 @@ public class Cursor : MonoBehaviour
 
         if (pata.DetectaSuelo().collider != null)
         {
-            transform.position =Hacer_Par(pata.DetectaSuelo().point, pata) ;
-            pivote.GetComponent<CameraSystem>().ResetExterno(transform.position);
+            var vector_diferencia = pata.DetectaSuelo().point - transform.position;
+            transform.position += Hacer_Par(vector_diferencia, pata);
+            transform.position = new Vector3(
+                Mathf.Round(transform.position.x), 
+                Mathf.Round(transform.position.y), 
+                Mathf.Round(transform.position.z)
+            );
+            pivote.GetComponent<CameraSystem>().Reset_Externo(transform.position);
         }
     }
 
-    private UnityEngine.Vector3 Hacer_Par(UnityEngine.Vector3 punto_redondear, Detector pata)
+    private Vector3 Hacer_Par(Vector3 punto_redondear, Detector pata)
     {
-        float puntox= punto_redondear.x;
-        float puntoy= punto_redondear.y;
-        float puntoz= punto_redondear.z;
+        float punto_x = 0;
+        float punto_y = punto_redondear.y;
+        float punto_z = 0;
+
         if (pata == patas[0])
         {
-            puntox-=2;
-            puntoz-=2; 
+            punto_x = -2;
+            punto_z = -2; 
         }
 
-        if (pata == patas[1])
+        else if (pata == patas[1])
         {
-            puntoz-=2; 
+            punto_z = -2; 
         }
         
-        if (pata == patas[2])
+        else if (pata == patas[2])
         {
-            puntox+=2;
-            puntoz-=2; 
+            punto_x = 2;
+            punto_z = -2; 
         }
 
-        if (pata == patas[3])
+        else if (pata == patas[3])
         {
-            puntox-=2; 
+            punto_x = -2; 
         }
 
-        if (pata == patas[4])
+        else if (pata == patas[4])
         {
-            puntox=puntox;
-            puntoz=puntoy; 
+            punto_x = 0;
+            punto_z = 0; 
         }
 
-        if (pata == patas[5])
+        else if (pata == patas[5])
         {
-            puntox+=2; 
+            punto_x = 2; 
         }
 
-        if (pata == patas[6])
+        else if (pata == patas[6])
         {
-            puntox-=2;
-            puntoz+=2; 
+            punto_x = -2;
+            punto_z = 2; 
         }
 
-        if (pata == patas[7])
+        else if (pata == patas[7])
         {
-            puntoz+=2; 
+            punto_z = 2; 
         }
-        if (pata == patas[8])
+        else if (pata == patas[8])
         {
-            puntox+=2;
-            puntoz+=2; 
+            punto_x = 2;
+            punto_z = 2; 
         }
-        UnityEngine.Vector3 vertor_de_retorno= new UnityEngine.Vector3 (puntox,puntoy,puntoz);
-        return vertor_de_retorno;
+
+        Vector3 frente = transform.forward * punto_z;
+        Vector3 derecha = transform.right * punto_x;
+        Vector3 vector_de_retorno = new Vector3 (frente.x + derecha.x, punto_y, frente.z + derecha.z);
+
+        return vector_de_retorno;
     }
 }
