@@ -23,6 +23,7 @@ public class CameraSystem : MonoBehaviour
     private Vector3 _currentPosition;
     private Vector3 _originalPosition;
     private Vector3 _offsetPosition;
+    private bool _rotando = false;
 
     private float _targetZoom;
     private float _currentZoom;
@@ -55,16 +56,35 @@ public class CameraSystem : MonoBehaviour
 
     void Update()
     {
+        
+
+        Rotar();
+        Mover();
+        Zoom();
+       
+
+    }
+
+    private void Rotar()
+    {
         _currentRotation = transform.rotation;
         if (_currentRotation != _targetRotation)
         {
+            _rotando = true;
             Quaternion smoothRotation = Quaternion.Slerp(
                 _currentRotation,
                 _targetRotation,
                 rotationPerSecond * Time.deltaTime);
             transform.rotation = smoothRotation;
         }
+        else
+        {
+            _rotando = false;
+        }   
+    }
 
+    private void Mover()
+    {
         _currentPosition = transform.position;
         _targetPosition = (!_resetting) ? _currentPosition + _offsetPosition : _targetPosition;
         if (_currentPosition != _targetPosition)
@@ -78,31 +98,28 @@ public class CameraSystem : MonoBehaviour
 
         if (_resetting)
         {
-            _resetting = (!((_currentPosition - _targetPosition).magnitude < 0.1f));
+            _resetting = !((_currentPosition - _targetPosition).magnitude < 0.1f);
         }
+    }
 
+    private void Zoom()
+    {
         _currentZoom = _camera.orthographicSize;
-        _targetZoom = _currentZoom + _offsetZoom * zoomPerSecond;
-        if(_targetZoom < minimumZoom){ _targetZoom = minimumZoom + 0.2f; }
-        if(_targetZoom > maximumZoom){ _targetZoom = maximumZoom - 0.2f; }
         if (_currentZoom != _targetZoom)
         {
             float smoothZoom = Mathf.Lerp(
-                _currentZoom, 
-                _targetZoom,    
+                _currentZoom,
+                _targetZoom,
                 zoomPerSecond * Time.deltaTime);
-            Debug.Log(smoothZoom);
             _camera.orthographicSize = smoothZoom;
         }
-        
-
     }
 
-    public void Rotate(InputAction.CallbackContext context)
+    public void Rotate_Input(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            Debug.Log(context.ReadValue<float>());
+            //Debug.Log(context.ReadValue<float>());
             _targetRotation *= Quaternion.Euler(
                 0,
                 90 * -context.ReadValue<float>(),
@@ -110,7 +127,7 @@ public class CameraSystem : MonoBehaviour
         }
     }
 
-    public void MoveX(InputAction.CallbackContext context)
+    public void Mover_X_Input(InputAction.CallbackContext context)
     {
         if (!_resetting)
         {
@@ -120,7 +137,7 @@ public class CameraSystem : MonoBehaviour
         }
     }
 
-    public void MoveY(InputAction.CallbackContext context)
+    public void Mover_Y_Input(InputAction.CallbackContext context)
     {
         if (!_resetting)
         {
@@ -129,7 +146,7 @@ public class CameraSystem : MonoBehaviour
         }
     }
 
-    public void Zoom(InputAction.CallbackContext context)
+    public void Zoom_Input(InputAction.CallbackContext context)
     {
         if (context.started)
         {
@@ -141,14 +158,24 @@ public class CameraSystem : MonoBehaviour
         }
     }
 
-    public void ResetCamera(InputAction.CallbackContext context)
+    public void Reset_Camara(InputAction.CallbackContext context)
     {
         if (context.canceled)
         {
             Debug.Log("Reset Camera");
             _resetting = true;
-            _targetPosition = player.transform.position;
+            _targetPosition = _originalPosition;
         }
     }
     
+    public void Reset_Externo(Vector3 nuevo_centro)
+    {
+        _originalPosition = nuevo_centro;
+        _targetPosition = _originalPosition;
+        _resetting = true;
+    }
+    public bool Get_Rotando()
+    {
+        return _rotando;
+    }
 }
