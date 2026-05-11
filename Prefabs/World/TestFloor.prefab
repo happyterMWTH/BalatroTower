@@ -121,6 +121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1262572441583139345}
+  - component: {fileID: 8008116239615206091}
   m_Layer: 0
   m_Name: TestFloor
   m_TagString: Untagged
@@ -144,3 +145,16 @@ Transform:
   - {fileID: 4284324679510394171}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8008116239615206091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4852193459292934461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4cc58b6c66a4d46bbcf092be795d5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CreadorCapas
+  capaPrefab: {fileID: 4900000, guid: f5e5754b5ad73ac4abcbd1e7a48c25a9, type: 3}
