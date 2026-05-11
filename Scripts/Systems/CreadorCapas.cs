@@ -24,7 +24,6 @@ public class CreadorCapas : MonoBehaviour
                 //Debug.Log("columnas: " + columnas.Length);
                 for (int x = 0; x < columnas.Length; x++)
                 {
-                    Debug.Log($"Procesando fila {y}, columna {x}: valor '{columnas[x]}'");
                     if(columnas[x] == "1")
                     {
                         Vector3 posicion_cuadro = new Vector3(
