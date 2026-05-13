@@ -50,7 +50,7 @@ public class CameraSystem : MonoBehaviour
         _targetPosition = _currentPosition;
         _originalPosition = _currentPosition;
 
-        _currentZoom = _camera.orthographicSize;
+        _currentZoom = _camera.fieldOfView;
         _targetZoom = _currentZoom;
     }
 
@@ -104,14 +104,17 @@ public class CameraSystem : MonoBehaviour
 
     private void Zoom()
     {
-        _currentZoom = _camera.orthographicSize;
+        _currentZoom = _camera.fieldOfView;
+         _targetZoom = _currentZoom + _offsetZoom * zoomPerSecond;
+        if(_targetZoom < minimumZoom){ _targetZoom = minimumZoom + 0.1f; }
+        if(_targetZoom > maximumZoom){ _targetZoom = maximumZoom - 0.1f; }
         if (_currentZoom != _targetZoom)
         {
             float smoothZoom = Mathf.Lerp(
                 _currentZoom,
                 _targetZoom,
                 zoomPerSecond * Time.deltaTime);
-            _camera.orthographicSize = smoothZoom;
+            _camera.fieldOfView = smoothZoom;
         }
     }
 
