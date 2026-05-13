@@ -215,7 +215,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 30
-  orthographic: 1
+  orthographic: 0
   orthographic size: 24.81
   m_Depth: -1
   m_CullingMask:
@@ -373,7 +373,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8008116239615206091, guid: 43ee75a4009186c4681cfb6930c72e34, type: 3}
       propertyPath: desfase_y
-      value: 0.5
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008116239615206091, guid: 43ee75a4009186c4681cfb6930c72e34, type: 3}
+      propertyPath: debug_mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8008116239615206091, guid: 43ee75a4009186c4681cfb6930c72e34, type: 3}
+      propertyPath: visualizar
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8008116239615206091, guid: 43ee75a4009186c4681cfb6930c72e34, type: 3}
       propertyPath: prefab_cuadro

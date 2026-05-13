@@ -2,6 +2,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class CreadorCapas : MonoBehaviour
 {
     [Header("Capa Variables")]
@@ -10,9 +11,16 @@ public class CreadorCapas : MonoBehaviour
     [SerializeField] private int unidades_por_cuadro = 2;
     [SerializeField] private GameObject prefab_cuadro;
     [SerializeField] private float desfase_y;
+    private string[] capas = new string[] {"Finales", "Vacíos", "Baldíos", "Edificios" };
+
+    [Header("Debug Variables")]
+    [SerializeField] private bool verbose = false;
+    [SerializeField] private bool visualizar = false;
 
     void Start()
     {
+        Debug.Log("Iniciando creación de capas en tiempo: " + Time.time);
+
         Vector3 posicion_inicial = transform.position;
         if(cuadricula_csv != null)
         {
@@ -24,24 +32,33 @@ public class CreadorCapas : MonoBehaviour
                 //Debug.Log("columnas: " + columnas.Length);
                 for (int x = 0; x < columnas.Length; x++)
                 {
-                    if(columnas[x] == "1")
+                    string[] nivel = columnas[x].Split('.');
+                    for(int n = 0; n < nivel.Length; n++)
                     {
-                        Vector3 posicion_cuadro = new Vector3(
-                            posicion_inicial.x + x * unidades_por_cuadro, 
-                            posicion_inicial.y + desfase_y, 
-                            posicion_inicial.z - y * unidades_por_cuadro);
-                        var nuevo_cuadro = Instantiate(prefab_cuadro, posicion_cuadro, Quaternion.identity, transform);
-                        nuevo_cuadro.name = $"Cuadro_{x}_{y}";
-                        nuevo_cuadro.layer = LayerMask.NameToLayer("Edificios");
-                        foreach (Transform child in nuevo_cuadro.transform)
+                        string indice_capa_string = nivel[n].Trim();
+                        int indice_capa = int.Parse(indice_capa_string);
+                        if(indice_capa >= 0 && indice_capa < capas.Length)
                         {
-                            child.gameObject.layer = LayerMask.NameToLayer("Edificios");
+                            Vector3 posicion_cuadro = new Vector3(
+                                posicion_inicial.x + x * unidades_por_cuadro, 
+                                posicion_inicial.y + desfase_y + n * unidades_por_cuadro, 
+                                posicion_inicial.z - y * unidades_por_cuadro
+                                );
+                            GameObject nuevo_cuadro = Instantiate(prefab_cuadro, posicion_cuadro, Quaternion.identity, transform);
+                            nuevo_cuadro.name = "Cuadro_" + x + "_" + y + "_" + n;
+                            CapasDetectoras capas_detectoras = nuevo_cuadro.GetComponent<CapasDetectoras>();
+                            if(capas_detectoras != null)
+                            {
+                                capas_detectoras.CambiarCapa(capas[indice_capa], visualizar, verbose);
+                            }
                         }
                     }
                 }
             }
         }
+        Debug.Log("Finalizada creación de capas en tiempo: " + Time.time);
     }
+
 
     
 
