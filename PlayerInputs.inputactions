@@ -286,7 +286,7 @@
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard",
+                    "groups": "",
                     "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": true

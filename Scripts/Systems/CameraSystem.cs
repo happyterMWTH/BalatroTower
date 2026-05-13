@@ -26,8 +26,8 @@ public class CameraSystem : MonoBehaviour
     private bool _rotando = false;
 
     private float _targetZoom;
-    [SerializeField] private float _currentZoom;
-    [SerializeField] private float _offsetZoom;
+    private float _currentZoom;
+    private float _offsetZoom;
     private bool _resetting;
 
     void Awake()
@@ -50,7 +50,7 @@ public class CameraSystem : MonoBehaviour
         _targetPosition = _currentPosition;
         _originalPosition = _currentPosition;
 
-        _currentZoom = _camera.fieldOfView;
+        _currentZoom = _camera.orthographicSize;
         _targetZoom = _currentZoom;
     }
 
@@ -104,17 +104,14 @@ public class CameraSystem : MonoBehaviour
 
     private void Zoom()
     {
-        _currentZoom = _camera.fieldOfView;
-        _targetZoom = _currentZoom + _offsetZoom * zoomPerSecond;
-        if(_targetZoom < minimumZoom){ _targetZoom = minimumZoom + 0.1f; }
-        if(_targetZoom > maximumZoom){ _targetZoom = maximumZoom - 0.1f; }
+        _currentZoom = _camera.orthographicSize;
         if (_currentZoom != _targetZoom)
         {
             float smoothZoom = Mathf.Lerp(
                 _currentZoom,
                 _targetZoom,
                 zoomPerSecond * Time.deltaTime);
-            _camera.fieldOfView = smoothZoom;
+            _camera.orthographicSize = smoothZoom;
         }
     }
 
