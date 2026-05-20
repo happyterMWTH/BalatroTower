@@ -157,4 +157,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da4cc58b6c66a4d46bbcf092be795d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CreadorCapas
-  capaPrefab: {fileID: 4900000, guid: f5e5754b5ad73ac4abcbd1e7a48c25a9, type: 3}
+  cuadricula_csv: {fileID: 4900000, guid: f5e5754b5ad73ac4abcbd1e7a48c25a9, type: 3}
+  divisor: 59
+  unidades_por_cuadro: 2
+  prefab_cuadro: {fileID: 2565291547128187880, guid: 9911c5ace37871343b99654903431ec5, type: 3}
+  desfase_y: 0.01
+  verbose: 0
+  visualizar: 1

@@ -44,3 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2137362d261c8494d8607fd881e15a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  verbose: 1
+  color_base: {r: 0, g: 1, b: 0, a: 1}
+  distancia_deteccion_suelo: 8
+  vacio_detectado: 0

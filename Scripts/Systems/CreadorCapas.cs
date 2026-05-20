@@ -11,7 +11,7 @@ public class CreadorCapas : MonoBehaviour
     [SerializeField] private int unidades_por_cuadro = 2;
     [SerializeField] private GameObject prefab_cuadro;
     [SerializeField] private float desfase_y;
-    private string[] capas = new string[] {"Finales", "Vacíos", "Baldíos", "Edificios" };
+    private string[] capas = new string[] {"Finales", "Vacíos", "Baldíos", "Edificios"};
 
     [Header("Debug Variables")]
     [SerializeField] private bool verbose = false;
@@ -21,7 +21,7 @@ public class CreadorCapas : MonoBehaviour
     {
         Debug.Log("Iniciando creación de capas en tiempo: " + Time.time);
 
-        Vector3 posicion_inicial = transform.position;
+        Vector3 posicion_inicial = transform.position + new Vector3(-2,0,2);
         if(cuadricula_csv != null)
         {
             string cuadricula_text = cuadricula_csv.text.ToString();

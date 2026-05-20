@@ -7,6 +7,7 @@ public class Cursor : MonoBehaviour
     [SerializeField] private Detector[] patas = new Detector[9];
     [SerializeField] private GameObject pivote;
     [SerializeField] private float perspectiva_camara = -20f;
+    [SerializeField] private int maximos_vacios = 4;
 
     private UnityEngine.Vector2 posible_movimiento = new UnityEngine.Vector2(0, 0);
 
@@ -37,13 +38,16 @@ public class Cursor : MonoBehaviour
         posible_movimiento.y = valor_y;
         if(context.started && !pivote.GetComponent<CameraSystem>().Get_Rotando()) Mover();
     }
-    private void Mover()
+    // Movimiento del cursor
+    private bool Mover()
     {
         Detector pata = patas[(int)posible_movimiento.y * 3 + (int)posible_movimiento.x + 4];
 
+        // Todavía no podemos hacer que salten los vacíos porque el raycast no funciona sin el FixedUpdate
         if (pata.DetectaSuelo().collider != null)
         {
             var vector_diferencia = pata.DetectaSuelo().point - transform.position;
+            
             transform.position += Hacer_Par(vector_diferencia, pata);
             transform.position = new Vector3(
                 Mathf.Round(transform.position.x), 
@@ -52,8 +56,16 @@ public class Cursor : MonoBehaviour
             );
             pivote.GetComponent<CameraSystem>().Reset_Externo(transform.position);
         }
+        return pata.DetectaSuelo().collider != null;
+    }
+    // Actualización del visual del cursor
+    private void Actualizar_Cursor()
+    {
+
     }
 
+
+    // Ajuste de coordenadas
     private Vector3 Hacer_Par(Vector3 punto_redondear, Detector pata)
     {
         float punto_x = 0;
@@ -70,35 +82,29 @@ public class Cursor : MonoBehaviour
         {
             punto_z = -2; 
         }
-        
         else if (pata == patas[2])
         {
             punto_x = 2;
             punto_z = -2; 
         }
-
         else if (pata == patas[3])
         {
             punto_x = -2; 
         }
-
         else if (pata == patas[4])
         {
             punto_x = 0;
             punto_z = 0; 
         }
-
         else if (pata == patas[5])
         {
             punto_x = 2; 
         }
-
         else if (pata == patas[6])
         {
             punto_x = -2;
             punto_z = 2; 
         }
-
         else if (pata == patas[7])
         {
             punto_z = 2; 
@@ -115,4 +121,7 @@ public class Cursor : MonoBehaviour
 
         return vector_de_retorno;
     }
+    
+
+
 }
